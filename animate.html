@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+</html>
+<body> 
+     <script src="C:\Users\vveerina\Desktop\New folder\jquery-3.4.1.min.js"></script>
+        <script>
+        $(document).ready(function(){
+$("#zoomin").click(function(){
+    $("img").animate({
+        width: "+=20px",
+        height: "+=20px",
+        "max-height": "600px",
+            "max-width": "600px"
+    });
+})
+$("#zoomout").click(function(){
+   
+    $("img").animate({
+            "min-height": '200px',
+            "min-width": '200px',
+            width: "-=20",
+            height: "-=20"
+            
+    });
+
+})
+        });
+        </script>
+ <div style="text-align: center">
+    <button id="zoomin">zoomin</button>
+    <button id="zoomout">zoomout</button><br>
+    
+    <img src="C:\Users\vveerina\Desktop\images.jpg" width="400px" height="400px">
+</div>
+<!-- <head>
+<link href="C:\Users\vveerina\Desktop\assignments\assignment3\style.css" rel="stylesheet">
+</head>
+
+<body>
+<h1>Contact Form using JavaScript</h1>
+<div id="form_sample"></div>
+<script src="C:\Users\vveerina\Desktop\rough.js"></script> -->
+</body>
