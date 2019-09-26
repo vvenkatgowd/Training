@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<!-- saved from url=(0084)https://dl3.pushbulletusercontent.com/H2LhUjSOWQ6NBHK6Olde5pBichsxPl2u/Reg_Form.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="./Registration Form_files/bootstrap.min.css">
+	<link rel="stylesheet" href="./Registration Form_files/all.min.css">
+	<!-- <link rel="stylesheet" href="style.css"> -->
+	<title>Registration Form</title>
+	
+	<script>
+		function validate()
+		{
+			var user_ID=String(document.getElementById('uid').value);
+			// alert(user_ID)
+			var pass_word=String(document.getElementById('pword').value);
+			var conf_password=String(document.getElementById('cpword').value);
+			var name_user=String(document.getElementById('nm').value);
+			var u_address=String(document.getElementById('address1').value);
+			var zipcode=Number(document.getElementById('zip_code').value);
+			var em_ail=String(document.getElementById('e_mail').value);            
+			var dob_date=String(document.getElementById('dob').value)
+			var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+			var name_regex = /^[A-Za-z ]+$/;
+			if((user_ID!="") && (pass_word!="") &&(conf_password!="") &&(name_user!="") &&(zipcode!="") &&(em_ail!="") &&(dob_date!=""))
+			{ 
+				if(user_ID.length>=5 && user_ID.length<=12)
+				{
+					if(name_regex.test(name_user)==true)
+					{
+						if(pass_word.length>=7 && pass_word.length<=12)
+						{
+							if(pass_word==conf_password)
+							{       
+								if(!isNaN(zipcode)==true)
+								{
+									if(reg.test(em_ail)==true)
+									{
+										if(getAge(dob_date)>=18 )
+										{
+											alert("Success")
+										}
+										else{
+											alert("You must be over 18 to continue!")
+										}
+									}
+									else
+									{
+										alert("Email Not Valid");
+									}
+								}
+								else if(isNaN(zipcode)==true)
+								{
+									
+									alert("ZIP Code can only contain numbers!");
+								}
+							}
+							else
+							{
+								alert("Passwords don't match!");
+							}
+						}
+						else{
+							alert("Password should be between 7-12 characters")
+						}
+					}        
+					else{
+						
+						alert("Name can contain only alphabets!");
+					}
+				}
+				else{
+					alert("User ID should be between 5-12 characters")
+				}
+			}
+			else{
+				alert("Enter the fields")
+			}
+			
+			function getAge(dateString) 
+			{
+				var today = new Date();
+				var birthDate = new Date(dateString);
+				var age = today.getFullYear() - birthDate.getFullYear();
+				var m = today.getMonth() - birthDate.getMonth();
+				if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
+				{
+					age--;
+				}
+				return age;
+			}
+		}
+	</script>
+	<style>
+		.form-control{
+			border: 1px solid black;
+			align-content: center
+		}
+	</style>
+	
+</head>
+<body>
+	
+	<form>
+						
+				<div style="text-align: center; color: black">
+					<h3>Registration Form</h3><br>
+				</div>
+				<fieldset style="border: 1px solid black; margin-left: 420px; margin-right: 420px; padding: 20px; margin-bottom: 200px; border-radius: 10px; background-color: antiquewhite">
+				<div class="form-group">
+					<div style="width: 100%">
+						<label for="uid">User ID:</label>
+						<input type="text" class="form-control" minlength="5" maxlength="12" id="uid" name="u_ID" required="">
+					</div>
+					<div style="width: 100%">
+						<label for="pword" class="label_1">Password: </label>
+						<input type="password" class="form-control" id="pword" minlength="7" maxlength="12" name="pswd" required="">
+					</div>
+					<div style="width: 100%">
+						<label for="cpword" class="label_1">Confirm Password: </label>
+						<input type="password" class="form-control" id="cpword" minlength="7" maxlength="12" name="c_pswd" required="">
+					</div>
+					<div style="width: 100%">
+						<label for="nm" class="label_1">Name: </label>
+						<input type="text" class="form-control" id="nm" name="u_name" required="">
+					</div>
+					<div style="width: 100%">
+						<label for="address1" class="label_1">Address: </label>
+						<input type="text" class="form-control" id="address1" name="add_ress">
+					</div>
+					<div style="width: 100%">
+						
+						<label for="country_list" class="label_1">Country: </label>
+						<select class="form-control" id="country_list" required="">
+							<option value="1">India</option>
+							<option value="2">China</option>
+							<option value="3">Japan</option>
+							<option value="4">Korea</option>
+						</select>
+					</div>
+					<div style="width: 100%">
+						<label for="zip_code" class="label_1">ZIP Code: </label>
+						<input class="form-control" type="number" id="zip_code" name="zip_code" placeholder="ZIP Code" required="">
+					</div>
+					<div style="width: 100%">
+						<label for="e_mail" class="label_1">Email: </label>
+						<input class="form-control" type="text" id="e_mail" name="e_mail" placeholder="Email ID" required="">
+					</div>
+					<div style="width: 100%">
+						<label for="date" class="label_1">DOB: </label>
+						<input class="form-control" type="date" id="dob" name="dob" placeholder="Enter Date of Birth" required="">
+					</div>
+					<div style="width: 100%">
+						<label for="gender" class="label_1">Sex: </label>
+						
+							<input type="radio" name="gender" value="male" required=""> Male
+							<input type="radio" name="gender" value="female"> Female                
+							
+					</div>
+					<div style="width: 100%">
+						<label class="label_1">Language: </label>
+						
+						<input type="checkbox" name="english_lang" value="English" required=""> English
+						<input type="checkbox" name="non_english_lang" value="Non English" required="">Non English
+						
+					</div>
+							
+					<div style="width: 100%">
+						<label class="label_1">About:</label>
+						<textarea class="form-control" rows="4" cols="40"></textarea>
+					</div><br>
+					<center>		
+					<div style="width: 100%">
+						<input class="input_1" type="button" value="Continue" onclick="validate()">
+					</div>
+					</center>
+							
+				</div>
+			</fieldset>
+
+				
+	</form>
+			
+			<script src="./Registration Form_files/jquery.slim.min.js.download"></script>
+			<script src="./Registration Form_files/popper.min.js.download"></script>
+			<script src="./Registration Form_files/bootstrap.min.js.download"></script>
+		
+		</body></html>
