@@ -1,0 +1,43 @@
+
+--query 1
+select a.account_number,a.customer_number,a.account_opening_date,c.firstname,c.lastname from 
+account_master a left join customer_master c
+on a.customer_number=c.customer_number order by account_number
+
+--query 2
+select  count(customer_city) Cust_Count from customer_master  where customer_city='DELHI'
+
+--query 3
+select c.customer_number,c.firstname,a.account_number from
+customer_master c left join
+account_master a
+on c.customer_number=a.customer_number where day(account_opening_date)>15 order by customer_number,account_number
+
+
+--query 4
+select c.customer_number,c.firstname,a.account_number from
+account_master a left join
+customer_master c
+on a.customer_number=c.customer_number where account_status='TERMINATED' order by customer_number,account_number
+
+
+--query 5
+select transaction_type,count(transaction_number) Trans_Count from 
+account_master left join
+transaction_details 
+on account_master.account_number=transaction_details.account_number where customer_number like '%001'
+group by transaction_type order by transaction_type
+
+
+--query 6
+select count(customer_number) Count_Customer from 
+customer_master where customer_number not in (select customer_number from account_master) 
+
+
+
+--query 7
+select a.account_number,sum(t.transaction_amount)+a.opening_balance from
+account_master a left join
+transaction_details t
+on a.account_number=t.account_number where transaction_type='DEPOSIT' group by a.account_number 
+order by account_number 
