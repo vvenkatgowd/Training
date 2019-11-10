@@ -1,0 +1,123 @@
+----------program.cs---------------
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace EFAssessment
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            using (EmployeeContext cx = new EmployeeContext())
+            {
+                IList<Department> department = new List<Department>
+                {
+                    new Department{DepartmentID=1,DepartmentName="IT"},
+                    new Department{ DepartmentID=2, DepartmentName="HR"},
+                    new Department{ DepartmentID=3, DepartmentName="Account"}
+                };
+                cx.Departments.AddRange(department);
+                cx.SaveChanges();
+                Employee employee = new Employee();
+                employee.EmployeeID = 1;
+                employee.Name = "Venkat";
+                employee.Age = 21;
+                employee.Gender = "Male";
+                employee.Designation = "Tester";
+                employee.DepartmentID = 1;
+                cx.Employees.Add(employee);
+                cx.SaveChanges();
+
+                Employee emp = new Employee();
+                emp.EmployeeID = 2;
+                emp.Name = "Gowd";
+                emp.Age = 21;
+                emp.Gender = "Male";
+                emp.Designation = "Trainee";
+                emp.DepartmentID = 1;
+                cx.Employees.Add(emp);
+                cx.SaveChanges();
+                Console.WriteLine("Table created successfully.");
+            }
+            Console.ReadKey();
+        }
+    }
+}
+
+
+-------------------employee.cs---------------------
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace EFAssessment
+{
+    class Employee
+    {
+        public int EmployeeID { get; set; }
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public string Gender { get; set; }
+        public string Designation { get; set; }
+        [ForeignKey("Department")]
+
+        public int DepartmentID { get; set; }
+
+        public Department Department { get; set; }
+    }
+}
+
+
+---------------------department.cs--------------------
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace EFAssessment
+{
+    class Department
+    {
+        public int DepartmentID { get; set; }
+        public string DepartmentName { get; set; }
+    }
+}
+
+
+---------------------employeecontext.cs------------------
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Data.Entity;
+
+namespace EFAssessment
+{
+    class EmployeeContext : DbContext
+    {
+        public EmployeeContext() : base("DbCodefirst")
+        {
+
+        }
+
+        public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<Department> Departments { get; set; }
+
+    }
+}
+
