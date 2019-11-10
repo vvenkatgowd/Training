@@ -1,0 +1,134 @@
+*******************INDEX.CSHTML******************
+
+
+@model Cascading_Dropdown.Models.Cascading
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>MVC Cascading Dropdownlist</h2>
+@if (ViewBag.tblCountries != null)
+{
+    @Html.DropDownListFor(m=>m.cid,ViewBag.tblCountries as SelectList,"select country", new { @class="form-control"})
+
+}
+@Html.DropDownListFor(m => m.sid, new SelectList(""), "Select States", new { @class = "form-control" })
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#countryid").change(function () {
+            var countryid = $(this).val();
+            debugger
+            $.ajax({
+                type: "post",
+                url: "/Dropdown/GetStates?countryid=" + countryid,
+                contentType: "html",
+                success: function (response) {
+                    debugger
+                    $("#sid").empty();
+                    $("#sid").append(response);
+                }
+
+            })
+        })
+    })
+</script>
+
+
+
+=====================DropdownController==============================
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using Cascading_Dropdown.Models;
+
+namespace Cascading_Dropdown.Controllers
+{
+    public class DropdownController : Controller
+    {
+        // GET: Dropdown
+        public ActionResult Index()
+        {
+            dropdownEntities nav = new dropdownEntities();
+            ViewBag.tblCountries = new SelectList(GetCountries(), "cid", "Name");
+            return View();
+        }
+        public List<tblCountry> GetCountries()
+        {
+            dropdownEntities entity = new dropdownEntities();
+            List<tblCountry> tblCountries = entity.tblCountries.ToList();
+            return tblCountries;
+        }
+        public ActionResult GetStates(int countryid)
+        {
+            dropdownEntities entity = new dropdownEntities();
+            List<tblState> selectlist = entity.tblStates.Where(x => x.countryid == countryid).ToList();
+            ViewBag.tblStates = new SelectList(selectlist, "sid", "Name");
+            return PartialView("DisplayStates");
+        }
+    }
+}
+
+
+
+------------------------Cascading.cs-----------------------
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace Cascading_Dropdown.Models
+{
+    public class Cascading
+    {
+        public int cid { get; set; }
+        public int sid { get; set; }
+        //public int countryid { get; set; }
+    }
+}using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace Cascading_Dropdown.Models
+{
+    public class Cascading
+    {
+        public int cid { get; set; }
+        public int sid { get; set; }
+        //public int countryid { get; set; }
+    }
+}
+
+
+
+
+......................Displaystates.cshtml......................
+
+
+
+@model Cascading_Dropdown.tblState
+<option value="">Select States</option>
+@if (ViewBag.tblStates != null)
+{
+    foreach (var item in ViewBag.tblStates)
+    {
+        <option value="@item.Value">@item.Text</option>
+    }
+}
+
+
+
+
+
+
+
+
